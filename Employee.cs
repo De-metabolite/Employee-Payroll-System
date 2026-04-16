@@ -51,8 +51,14 @@ namespace Payroll
         {
             return BaseSalary;
         }
-        public void Bonus()
+        public decimal  Bonus(decimal performancescore)
         {
+
+            if (performancescore < 0 || performancescore > 10) 
+            {
+                throw new ArgumentException("Invalid Performance Score");
+            }
+
             return BaseSalary * (performancescore / 10);
         }
     }
@@ -94,7 +100,7 @@ namespace Payroll
 
     public interface IBonusable
     {
-        void Bonus();
+        public decimal Bonus(decimal performancescore);
     }
 }
 
