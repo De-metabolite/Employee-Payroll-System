@@ -9,14 +9,14 @@ namespace Payroll
     {
         public int Id { get; }
         public string Name { get; set; }
-        public string Department { get; set; }
+        public Department Department { get; set; }
         public decimal BaseSalary { get; set; }
         protected Employee()
         {
 
         }
 
-        public Employee(int id, string name, string department, decimal baseSalary)
+        public Employee(int id, string name, Department department, decimal baseSalary)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -56,7 +56,7 @@ namespace Payroll
 
             if (performancescore < 0 || performancescore > 10) 
             {
-                throw new ArgumentException("Invalid Performance Score");
+                throw new InvalidPerformanceScoreException();
             }
 
             return BaseSalary * (performancescore / 10);
@@ -101,6 +101,47 @@ namespace Payroll
     public interface IBonusable
     {
         public decimal Bonus(decimal performancescore);
+    }
+
+    public class InvalidPerformanceScoreException : Exception
+    {
+        public InvalidPerformanceScoreException() : base("Invalid Performance Score")
+        {
+        }
+        public InvalidPerformanceScoreException(string message) : base(message)
+        {
+        }
+    }
+
+    public struct PaySlip
+    { 
+        public Employee Employee { get; set; }
+        public decimal Grosspay { get; set; }
+        public DateTime PayDate {  get; set; }
+        public string PayPeriod {  get; set; }
+
+        public PaySlip(Employee employee, decimal grosspay, DateTime paydate, string payPeriod)
+        {
+            Employee = employee;
+            Grosspay = grosspay;
+            PayDate = paydate;
+            PayPeriod = payPeriod;
+        }
+
+        void PrintPaySlip()
+        {
+            Console.WriteLine(Employee);
+            Console.WriteLine(Grosspay);
+            Console.WriteLine(PayDate);
+            Console.WriteLine(PayPeriod);
+        }
+    }
+    public enum Department 
+    { 
+        IT,
+        HR,
+        Finance,
+        Operations,
     }
 }
 
