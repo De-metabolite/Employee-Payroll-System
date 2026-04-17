@@ -43,7 +43,8 @@ namespace Payroll
     }
     public class FullTimeEmployee : Employee, IBonusable
     {
-        public FullTimeEmployee(int id, string name, string department, decimal baseSalary) : base(id, name, department, baseSalary)
+        public FullTimeEmployee() { }
+        public FullTimeEmployee(int id, string name, Department department, decimal baseSalary) : base(id, name, department, baseSalary)
         {
 
         }
@@ -51,7 +52,7 @@ namespace Payroll
         {
             return BaseSalary;
         }
-        public decimal  Bonus(decimal performancescore)
+        public decimal  GetBonus(decimal performancescore)
         {
 
             if (performancescore < 0 || performancescore > 10) 
@@ -67,6 +68,7 @@ namespace Payroll
     {
         public decimal HourlyRate { get; set; }
         public int HoursWorked { get; set; }
+        public PartTimeEmployee() { }
         public PartTimeEmployee(decimal hourlyRate, int hoursWorked)
         {
             if (hoursWorked < 0 || hoursWorked > 300)
@@ -88,6 +90,7 @@ namespace Payroll
     public class Contractor : Employee
     {
         public decimal ContractAmount { get; set; }
+        public Contractor() { }
         public Contractor(decimal amount)
         {
             ContractAmount = amount;
@@ -100,7 +103,7 @@ namespace Payroll
 
     public interface IBonusable
     {
-        public decimal Bonus(decimal performancescore);
+        public decimal GetBonus(decimal performancescore);
     }
 
     public class InvalidPerformanceScoreException : Exception
