@@ -7,16 +7,16 @@ namespace Payroll
 {
     public abstract class Employee
     {
-        public int Id { get; }
+        public int Id { get;  }
         public string Name { get; set; }
-        public string Department { get; set; }
+        public Department Department { get; set; }
         public decimal BaseSalary { get; set; }
         protected Employee()
         {
 
         }
 
-        public Employee(int id, string name, string department, decimal baseSalary)
+        public Employee(int id, string name, Department department, decimal baseSalary)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -37,13 +37,14 @@ namespace Payroll
         public abstract decimal CalculateMonthlyPay();
         public virtual string GetEmployedInfo()
         {
-            return $"The Id: {Id}" + $"The Name: {Name}" + $"The Department: {Department}";
+            return $"The Id: {Id}\n" + $"The Name: {Name}\n" + $"The Department: {Department}\n";
         }
 
     }
     public class FullTimeEmployee : Employee, IBonusable
     {
-        public FullTimeEmployee(int id, string name, string department, decimal baseSalary) : base(id, name, department, baseSalary)
+        public FullTimeEmployee() { }
+        public FullTimeEmployee(int id, string name, Department department, decimal baseSalary) : base(id, name, department, baseSalary)
         {
 
         }
@@ -51,12 +52,12 @@ namespace Payroll
         {
             return BaseSalary;
         }
-        public decimal  Bonus(decimal performancescore)
+        public decimal  GetBonus(decimal performancescore)
         {
 
             if (performancescore < 0 || performancescore > 10) 
             {
-                throw new ArgumentException("Invalid Performance Score");
+                throw new InvalidPerformanceScoreException();
             }
 
             return BaseSalary * (performancescore / 10);
@@ -67,7 +68,8 @@ namespace Payroll
     {
         public decimal HourlyRate { get; set; }
         public int HoursWorked { get; set; }
-        public PartTimeEmployee(decimal hourlyRate, int hoursWorked)
+        public PartTimeEmployee() { }
+        public PartTimeEmployee(int id, string name,Department dept, decimal hourlyRate, int hoursWorked): base(id,name,dept,hourlyRate)
         {
             if (hoursWorked < 0 || hoursWorked > 300)
             {
@@ -88,19 +90,64 @@ namespace Payroll
     public class Contractor : Employee
     {
         public decimal ContractAmount { get; set; }
-        public Contractor(decimal amount)
+        public Contractor() {}
+        public Contractor(int id,string name,Department dept,decimal amount): base (id, name,dept, amount)
         {
             ContractAmount = amount;
+           
         }
         public override decimal CalculateMonthlyPay()
-        {
+        { 
             return ContractAmount;
         }
     }
 
     public interface IBonusable
     {
-        public decimal Bonus(decimal performancescore);
+        public decimal GetBonus(decimal performancescore);
+    }
+
+    public class InvalidPerformanceScoreException : Exception
+    {
+        public InvalidPerformanceScoreException() : base("Invalid Performance Score")
+        {
+        }
+        public InvalidPerformanceScoreException(string message) : base(message)
+        {
+        }
+    }
+
+    public struct PaySlip
+    { 
+        public Employee Employee { get; set; }
+        public decimal Grosspay { get; set; }
+        public DateTime PayDate {  get; set; }
+        public string PayPeriod {  get; set; }
+
+        public PaySlip(Employee employee, decimal grosspay, DateTime paydate, string payPeriod)
+        {
+            Employee = employee;
+            Grosspay = grosspay;
+            PayDate = paydate;
+            PayPeriod = payPeriod;
+        }
+
+         public void PrintPaySlip()
+        {
+            Console.WriteLine("Your PAYSLIP IS HERE.");
+            Console.WriteLine(Employee);
+            Console.WriteLine(Employee.GetEmployedInfo());
+            Console.WriteLine($"Total Pay:{Grosspay}");
+            Console.WriteLine($"Date and Time :{PayDate}");
+            Console.WriteLine($"Month Paid:{PayPeriod}");
+        }
+    }
+    public enum Department 
+    { 
+        IT,
+        HR,
+        Finance,
+        Operations,
     }
 }
 
