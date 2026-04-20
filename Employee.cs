@@ -7,7 +7,7 @@ namespace Payroll
 {
     public abstract class Employee
     {
-        public int Id { get; }
+        public int Id { get;  }
         public string Name { get; set; }
         public Department Department { get; set; }
         public decimal BaseSalary { get; set; }
@@ -37,7 +37,7 @@ namespace Payroll
         public abstract decimal CalculateMonthlyPay();
         public virtual string GetEmployedInfo()
         {
-            return $"The Id: {Id}" + $"The Name: {Name}" + $"The Department: {Department}";
+            return $"The Id: {Id}\n" + $"The Name: {Name}\n" + $"The Department: {Department}\n";
         }
 
     }
@@ -69,7 +69,7 @@ namespace Payroll
         public decimal HourlyRate { get; set; }
         public int HoursWorked { get; set; }
         public PartTimeEmployee() { }
-        public PartTimeEmployee(decimal hourlyRate, int hoursWorked)
+        public PartTimeEmployee(int id, string name,Department dept, decimal hourlyRate, int hoursWorked): base(id,name,dept,hourlyRate)
         {
             if (hoursWorked < 0 || hoursWorked > 300)
             {
@@ -90,13 +90,14 @@ namespace Payroll
     public class Contractor : Employee
     {
         public decimal ContractAmount { get; set; }
-        public Contractor() { }
-        public Contractor(decimal amount)
+        public Contractor() {}
+        public Contractor(int id,string name,Department dept,decimal amount): base (id, name,dept, amount)
         {
             ContractAmount = amount;
+           
         }
         public override decimal CalculateMonthlyPay()
-        {
+        { 
             return ContractAmount;
         }
     }
@@ -131,12 +132,14 @@ namespace Payroll
             PayPeriod = payPeriod;
         }
 
-        void PrintPaySlip()
+         public void PrintPaySlip()
         {
+            Console.WriteLine("Your PAYSLIP IS HERE.");
             Console.WriteLine(Employee);
-            Console.WriteLine(Grosspay);
-            Console.WriteLine(PayDate);
-            Console.WriteLine(PayPeriod);
+            Console.WriteLine(Employee.GetEmployedInfo());
+            Console.WriteLine($"Total Pay:{Grosspay}");
+            Console.WriteLine($"Date and Time :{PayDate}");
+            Console.WriteLine($"Month Paid:{PayPeriod}");
         }
     }
     public enum Department 

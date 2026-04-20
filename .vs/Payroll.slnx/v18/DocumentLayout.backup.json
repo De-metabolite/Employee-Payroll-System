@@ -26,12 +26,11 @@
               "Title": "Employee.cs",
               "DocumentMoniker": "C:\\Users\\hp\\source\\repos\\Payroll\\Employee.cs",
               "RelativeDocumentMoniker": "Employee.cs",
-              "ToolTip": "C:\\Users\\hp\\source\\repos\\Payroll\\Employee.cs*",
-              "RelativeToolTip": "Employee.cs*",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAAAGkAAAA6AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\hp\\source\\repos\\Payroll\\Employee.cs",
+              "RelativeToolTip": "Employee.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAAABkAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T10:09:33.891Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T10:09:33.891Z"
             },
             {
               "$type": "Document",
@@ -41,7 +40,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\hp\\source\\repos\\Payroll\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAADUAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAADUAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-16T10:08:28.538Z",
               "EditorCaption": ""
